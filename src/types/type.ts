@@ -1,7 +1,7 @@
-export interface Category {
+export interface Collection {
   level: number;
   name: string;
   img?: string;
   description?: string;
-  subCategories: Category[];
+  subCategories: Collection[];
 }
