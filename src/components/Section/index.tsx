@@ -1,4 +1,4 @@
-import React, { type PropsWithChildren } from "react";
+import { type PropsWithChildren } from "react";
 import Reveal from "../Reveal";
 import { Skeleton } from "@mui/material";
 

@@ -1,18 +1,12 @@
 import { useEffect, useState } from "react";
 import {
   Box,
-  Container,
   Grid,
   Typography,
   Button,
-  Card,
-  CardMedia,
-  Icon,
-  Skeleton,
 } from "@mui/material";
 import PhoneIcon from "@mui/icons-material/Phone";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PublicGoogleSheetsParser from "public-google-sheets-parser";
 
 import { buildCategorySchema } from "./utils/categoryParser";
@@ -21,10 +15,8 @@ import type { googlePlaceDetailsRes } from "./types/googlePlaceDetailsRes";
 import StoreTimingsCard from "./components/StoreTimingCard";
 import ReviewsCarousel from "./components/ReviewsCard/ReviewsCard";
 import ShopImagesCard from "./components/ShopImagesCard";
-import Reveal from "./components/Reveal";
 import Footer from "./components/Footer";
 import Section from "./components/Section";
-import Cross from "./assets/Icons/Cross";
 import CollectionsGrid from "./components/CollectionsGrid";
 import type { Collection } from "./types/type";
 import Hero from "./components/Hero";
@@ -56,8 +48,6 @@ export default function LandingCollections() {
     window.innerWidth < 600 ? 1 : window.innerWidth < 1000 ? 2 : 3;
 
   const [cols, setCols] = useState(getCols());
-  const [showAll, setShowAll] = useState(false);
-  const [categories, setCategories] = useState<Collection[]>([]);
   const [visible, setVisible] = useState<Collection[]>([]);
   const [loading, setLoading] = useState(true);
   const [placeData, setPlaceData] = useState<googlePlaceDetailsRes | null>(
@@ -78,7 +68,6 @@ export default function LandingCollections() {
           if (masterMap[c.name]) c.img = masterMap[c.name].img;
         });
 
-        setCategories(nested);
         setVisible(nested.slice(0, cols * 2));
       }
     );
@@ -97,11 +86,6 @@ export default function LandingCollections() {
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, []);
-
-  useEffect(() => {
-    const maxVisible = cols * 2;
-    setVisible(showAll ? categories : categories.slice(0, maxVisible));
-  }, [cols, showAll, categories]);
 
   return (
     <Box

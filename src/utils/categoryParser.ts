@@ -1,11 +1,11 @@
-import type { Category } from "../types/type";
+import type { Collection } from "../types/type";
 
 export function buildCategorySchema(
   rows: Record<string, string>[]
-): Category[] {
-  const result: Category[] = [];
+): Collection[] {
+  const result: Collection[] = [];
 
-  function findOrCreate(arr: Category[], name: string, level: number): Category {
+  function findOrCreate(arr: Collection[], name: string, level: number): Collection {
     let node = arr.find(item => item.name === name);
     if (!node) {
       node = { level, name, subCategories: [] };
