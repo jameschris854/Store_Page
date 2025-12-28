@@ -3,7 +3,6 @@ import isBetween from "dayjs/plugin/isBetween";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import {
   Box,
-  Typography,
   Stack,
   Button,
   Divider,
@@ -14,6 +13,7 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import { ACCENT } from "../../App";
 import type { Result } from "../../types/googlePlaceDetailsRes";
+import Typography from "../Typography";
 
 dayjs.extend(isBetween);
 dayjs.extend(customParseFormat);
@@ -122,11 +122,9 @@ export default function Footer({data}: Props) {
 
           <Typography
             fontSize={14}
-            sx={{
-              mt: 1,
-              fontWeight: 700,
-              color: openNow ? "#22c55e" : "#f87171",
-            }}
+            fontWeight={700}
+            color={openNow ? "#22c55e" : "#f87171"}
+            mt={1}
           >
             {openNow ? "Open now" : "Closed now"}
           </Typography>

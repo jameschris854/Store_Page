@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import {
   Box,
   Grid,
-  Typography,
   Button,
 } from "@mui/material";
 import PhoneIcon from "@mui/icons-material/Phone";
@@ -20,6 +19,7 @@ import Section from "./components/Section";
 import CollectionsGrid from "./components/CollectionsGrid";
 import type { Collection } from "./types/type";
 import Hero from "./components/Hero";
+import Typography from "./components/Typography";
 
 /* ---------------- theme ---------------- */
 export const PRIMARY = "#0b4dba";
@@ -111,7 +111,7 @@ export default function LandingCollections() {
 
       {/* ---------------- STORE PHOTOS ---------------- */}
       <Section>
-        <Typography sx={{ fontSize: 28, fontWeight: 900, color: PRIMARY }}>
+        <Typography fontSize={28} sx={{ fontWeight: 900, color: PRIMARY }}>
           Store Photos
         </Typography>
 
@@ -138,7 +138,10 @@ export default function LandingCollections() {
       {placeData?.result?.current_opening_hours?.periods && (
         <Section loading={loading}>
           <Typography
-            sx={{ fontSize: 22, fontWeight: 900, color: PRIMARY, mb: 1 }}
+          fontSize={22}
+          fontWeight={900}
+          color={PRIMARY}
+          mb={1}
           >
             Find Us
           </Typography>

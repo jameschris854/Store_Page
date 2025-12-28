@@ -3,11 +3,11 @@ import isBetween from "dayjs/plugin/isBetween";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import {
   Box,
-  Typography,
   Stack,
   Chip,
   Divider,
 } from "@mui/material";
+import Typography from "./Typography";
 
 dayjs.extend(isBetween);
 dayjs.extend(customParseFormat);

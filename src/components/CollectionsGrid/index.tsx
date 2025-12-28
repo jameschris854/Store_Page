@@ -1,12 +1,7 @@
-import {
-  Grid,
-  Card,
-  CardMedia,
-  Box,
-  Typography,
-} from "@mui/material";
+import { Grid, Card, CardMedia, Box } from "@mui/material";
 import type { Collection } from "../../types/type";
 import { ACCENT, PRIMARY } from "../../App";
+import Typography from "../Typography";
 
 interface CollectionsGridProps {
   collections: Collection[];
@@ -21,24 +16,11 @@ export default function CollectionsGrid({
     <Box>
       {/* ---------- SECTION TITLE ---------- */}
       <Box sx={{ mb: 3 }}>
-        <Typography
-          sx={{
-            fontSize: 12,
-            letterSpacing: 4,
-            color: ACCENT,
-            mb: 0.5,
-          }}
-        >
+        <Typography fontSize={12} letterSpacing={4} color={ACCENT} mb={0.5}>
           OUR RANGE
         </Typography>
 
-        <Typography
-          sx={{
-            fontSize: 28,
-            fontWeight: 900,
-            color: PRIMARY,
-          }}
-        >
+        <Typography fontSize={28} fontWeight={900} color={PRIMARY}>
           Our Collections
         </Typography>
       </Box>
@@ -47,8 +29,7 @@ export default function CollectionsGrid({
       <Grid container spacing={3}>
         {collections.map((c) => (
           <Grid
-            size={{ md: 4,sm: 6, xs: 12 ,lg:3 ,xl:3}}   
-
+            size={{ md: 4, sm: 3, xs: 6, lg: 3, xl: 3 }}
             key={c.name}
             sx={{ display: "flex" }}
           >
@@ -57,7 +38,7 @@ export default function CollectionsGrid({
               sx={{
                 position: "relative",
                 width: "100%",
-                height: 260, // 🔒 fixed height = uniform
+                aspectRatio: 1,
                 borderRadius: 4,
                 overflow: "hidden",
                 cursor: "pointer",
@@ -96,27 +77,25 @@ export default function CollectionsGrid({
                 sx={{
                   position: "absolute",
                   bottom: 0,
-                  p: 2.5,
+                  p: "10%",
                 }}
               >
                 <Typography
-                  sx={{
-                    color: "#fff",
-                    fontWeight: 900,
-                    fontSize: 20,
-                    lineHeight: 1.2,
-                  }}
+                  responsive
+                  color="#fff"
+                  fontWeight={900}
+                  fontSize={20}
+                  lineHeight={1.2}
                 >
                   {c.name}
                 </Typography>
 
                 <Typography
-                  sx={{
-                    mt: 0.5,
-                    fontSize: 13,
-                    fontWeight: 600,
-                    color: "rgba(255,255,255,0.85)",
-                  }}
+                  responsive
+                  mt={0.5}
+                  fontSize={13}
+                  fontWeight={600}
+                  color="rgba(255,255,255,0.85)"
                 >
                   Explore →
                 </Typography>
