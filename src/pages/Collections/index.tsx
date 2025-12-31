@@ -10,10 +10,6 @@ import EmptyIllustration from "../../assets/empty_category.svg";
 import Footer from "../../components/Footer";
 import usePlaceData from "../../hooks/usePlaceData";
 import Header from "../../Header";
-import {
-  DESKTOP_MAX_WIDTH,
-  MOBILE_HORIZONTAL_PADDING,
-} from "../../constants/globals";
 import Container from "../../components/Container";
 import Section from "../../components/Section";
 

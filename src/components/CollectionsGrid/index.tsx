@@ -1,11 +1,9 @@
-import { Grid, Card, CardMedia, Box, Button } from "@mui/material";
+import { Grid, Box, Button } from "@mui/material";
 import type { Collection } from "../../types/type";
 import Typography from "../Typography";
 import { useEffect, useState } from "react";
-import PublicGoogleSheetsParser from "public-google-sheets-parser";
-import { buildCollectionTree } from "../../utils/categoryParser";
 import { ACCENT, PRIMARY } from "../../constants/globals";
-import { useNavigate, useNavigation } from "react-router";
+import { useNavigate } from "react-router";
 import { getCollectionsTree } from "../../services/collectionservice";
 import CollectionCard from "../CollectionCard";
 import Container from "../Container";

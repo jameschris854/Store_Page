@@ -2,7 +2,6 @@ import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import {
-  Box,
   Stack,
   Button,
   Divider,
@@ -13,7 +12,7 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import type { Result } from "../../types/googlePlaceDetailsRes";
 import Typography from "../Typography";
-import { ACCENT, DESKTOP_MAX_WIDTH, MOBILE_HORIZONTAL_PADDING } from "../../constants/globals";
+import { ACCENT } from "../../constants/globals";
 import Container from "../Container";
 
 dayjs.extend(isBetween);

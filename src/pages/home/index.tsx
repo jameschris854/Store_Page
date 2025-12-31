@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import {
   Box,
   Grid,
@@ -14,9 +13,7 @@ import ReviewsCarousel from "../../components/ReviewsCard/ReviewsCard";
 import Section from "../../components/Section";
 import ShopImagesCard from "../../components/ShopImagesCard";
 import StoreTimingCard from "../../components/StoreTimingCard";
-import type { googlePlaceDetailsRes } from "../../types/googlePlaceDetailsRes";
 import { PRIMARY } from "../../constants/globals";
-import { getPlaceData } from "../../services/placeservice";
 import usePlaceData from "../../hooks/usePlaceData";
 import Container from "../../components/Container";
 
