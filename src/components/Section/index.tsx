@@ -2,6 +2,7 @@ import { type PropsWithChildren, type CSSProperties } from "react";
 import Reveal from "../Reveal";
 import { Skeleton } from "@mui/material";
 import { DESKTOP_MAX_WIDTH } from "../../constants/globals";
+import Container from "../Container";
 export default ({
   children,
   loading = false,
@@ -11,7 +12,7 @@ export default ({
   return (
     <>
       {loading ? (
-        <>
+        <Container>
           <Skeleton
             variant="rectangular"
             height={30}
@@ -22,7 +23,7 @@ export default ({
             height={320}
             sx={{ borderRadius: 4, marginBottom: 6, maxWidth: DESKTOP_MAX_WIDTH }}
           />
-        </>
+        </Container>
       ) : (
         <Reveal>{children}</Reveal>
       )}
