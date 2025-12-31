@@ -16,7 +16,7 @@ interface ShowcaseScrollerProps {
 export default function ShowcaseScroller({
   children,
   height = { xs: 220, md: 320 },
-  slidePadding = 3,
+  slidePadding = 0,
   autoScrollSpeed = 0.6,
   vignette
 }: ShowcaseScrollerProps) {

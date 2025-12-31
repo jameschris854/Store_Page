@@ -1,7 +1,8 @@
-export interface Collection {
-  level: number;
+export type Collection = {
   name: string;
+  level: number;
+  slug: string;
+  path: string;
+  sub: Collection[];
   img?: string;
-  description?: string;
-  subCategories: Collection[];
-}
+};

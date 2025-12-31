@@ -11,9 +11,10 @@ import {
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PhoneIcon from "@mui/icons-material/Phone";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import { ACCENT } from "../../App";
 import type { Result } from "../../types/googlePlaceDetailsRes";
 import Typography from "../Typography";
+import { ACCENT, DESKTOP_MAX_WIDTH, MOBILE_HORIZONTAL_PADDING } from "../../constants/globals";
+import Container from "../Container";
 
 dayjs.extend(isBetween);
 dayjs.extend(customParseFormat);
@@ -53,16 +54,15 @@ export default function Footer({data}: Props) {
   const openNow = isOpenNow(periods);
 
   return (
-    <Box
+    <Container
       sx={{
         mt: 10,
-        px: 2,
         py: 4,
-        background: "#0f172a",
+        background: "#1e293b",
         color: "#e5e7eb",
+        marginTop: "auto",
       }}
     >
-      <Box maxWidth="lg" mx="auto">
         {/* ---------- TOP ---------- */}
         <Stack spacing={1}>
           <Typography fontSize={20} fontWeight={900}>
@@ -136,7 +136,6 @@ export default function Footer({data}: Props) {
         <Typography fontSize={13} color="#94a3b8">
           © {new Date().getFullYear()} {name}. All rights reserved.
         </Typography>
-      </Box>
-    </Box>
+    </Container>
   );
 }

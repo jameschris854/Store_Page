@@ -1,20 +1,18 @@
 import { type PropsWithChildren, type CSSProperties } from "react";
 import Reveal from "../Reveal";
 import { Skeleton } from "@mui/material";
+import { DESKTOP_MAX_WIDTH } from "../../constants/globals";
 export default ({
   children,
   loading = false,
   containerStyle,
 }: PropsWithChildren & { loading?: boolean; containerStyle?: CSSProperties }) => {
   const baseStyle: CSSProperties = {
-    padding: "0 20px",
-    maxWidth: 1200,
-    margin: "0 auto",
     paddingBottom: 24,
   };
 
   return (
-    <section style={{ ...baseStyle, ...(containerStyle || {}) }}>
+    <>
       {loading ? (
         <>
           <Skeleton
@@ -25,12 +23,12 @@ export default ({
           <Skeleton
             variant="rectangular"
             height={320}
-            sx={{ borderRadius: 4, marginBottom: 6, maxWidth: 1200 }}
+            sx={{ borderRadius: 4, marginBottom: 6, maxWidth: DESKTOP_MAX_WIDTH }}
           />
         </>
       ) : (
         <Reveal>{children}</Reveal>
       )}
-    </section>
+    </>
   );
 };

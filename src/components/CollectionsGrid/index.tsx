@@ -1,19 +1,40 @@
-import { Grid, Card, CardMedia, Box } from "@mui/material";
+import { Grid, Card, CardMedia, Box, Button } from "@mui/material";
 import type { Collection } from "../../types/type";
-import { ACCENT, PRIMARY } from "../../App";
 import Typography from "../Typography";
+import { useEffect, useState } from "react";
+import PublicGoogleSheetsParser from "public-google-sheets-parser";
+import { buildCollectionTree } from "../../utils/categoryParser";
+import { ACCENT, PRIMARY } from "../../constants/globals";
+import { useNavigate, useNavigation } from "react-router";
+import { getCollectionsTree } from "../../services/collectionservice";
+import CollectionCard from "../CollectionCard";
+import Container from "../Container";
 
 interface CollectionsGridProps {
-  collections: Collection[];
-  onSelect?: (collection: Collection) => void;
 }
 
 export default function CollectionsGrid({
-  collections,
-  onSelect,
 }: CollectionsGridProps) {
+  const getCols = () =>    window.innerWidth < 600 ? 1 : window.innerWidth < 1000 ? 2 : 3;
+  const navigation = useNavigate();
+  const [, setCols] = useState(getCols());
+  const [collections, setVisible] = useState<Collection[]>([]);
+
+    /* ---------------- responsive ---------------- */
+  useEffect(() => {
+    const onResize = () => setCols(getCols());
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  useEffect(() => {
+   getCollectionsTree().then((data) => {
+     setVisible(data);
+   });
+  },[])
+
   return (
-    <Box>
+    <Container>
       {/* ---------- SECTION TITLE ---------- */}
       <Box sx={{ mb: 3 }}>
         <Typography fontSize={12} letterSpacing={4} color={ACCENT} mb={0.5}>
@@ -28,82 +49,33 @@ export default function CollectionsGrid({
       {/* ---------- GRID ---------- */}
       <Grid container spacing={3}>
         {collections.map((c) => (
-          <Grid
-            size={{ md: 4, sm: 3, xs: 6, lg: 3, xl: 3 }}
-            key={c.name}
-            sx={{ display: "flex" }}
-          >
-            <Card
-              onClick={() => onSelect?.(c)}
-              sx={{
-                position: "relative",
-                width: "100%",
-                aspectRatio: 1,
-                borderRadius: 4,
-                overflow: "hidden",
-                cursor: "pointer",
-                transition: "all .35s ease",
-                boxShadow: "0 10px 30px rgba(2,6,23,0.08)",
-                "&:hover": {
-                  transform: "translateY(-6px)",
-                  boxShadow: "0 20px 45px rgba(2,6,23,0.12)",
-                },
-              }}
-            >
-              {/* Image */}
-              <CardMedia
-                component="img"
-                image={c.img}
-                alt={c.name}
-                sx={{
-                  height: "100%",
-                  width: "100%",
-                  objectFit: "cover",
-                }}
-              />
-
-              {/* Overlay */}
-              <Box
-                sx={{
-                  position: "absolute",
-                  inset: 0,
-                  background:
-                    "linear-gradient(to top, rgba(2,6,23,0.75), rgba(2,6,23,0.1) 65%)",
-                }}
-              />
-
-              {/* Text */}
-              <Box
-                sx={{
-                  position: "absolute",
-                  bottom: 0,
-                  p: "10%",
-                }}
-              >
-                <Typography
-                  responsive
-                  color="#fff"
-                  fontWeight={900}
-                  fontSize={20}
-                  lineHeight={1.2}
-                >
-                  {c.name}
-                </Typography>
-
-                <Typography
-                  responsive
-                  mt={0.5}
-                  fontSize={13}
-                  fontWeight={600}
-                  color="rgba(255,255,255,0.85)"
-                >
-                  Explore →
-                </Typography>
-              </Box>
-            </Card>
-          </Grid>
+          <CollectionCard key={c.path} collection={c} />
         ))}
       </Grid>
-    </Box>
+      <Box sx={{ textAlign: "center", mt: 5 }}>
+        <Button
+          onClick={() => navigation("collections",{})}
+          sx={{
+            px: 6,
+            py: 1.5,
+            borderRadius: 999,
+            fontWeight: 700,
+            letterSpacing: 1,
+            textTransform: "none",
+            color: ACCENT,
+            border: `2px solid ${ACCENT}`,
+            background: "transparent",
+            transition: "all .3s ease",
+            "&:hover": {
+              background: ACCENT,
+              color: "#fff",
+              transform: "translateY(-2px)",
+            },
+          }}
+        >
+          See More
+        </Button>
+        </Box>
+    </Container>
   );
 }

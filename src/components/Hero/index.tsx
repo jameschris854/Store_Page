@@ -1,10 +1,10 @@
-import { Box } from "@mui/material"
-import { PRIMARY, ACCENT } from "../../App"
 import Cross from "../../assets/Icons/Cross"
 import Typography from "../Typography"
+import { ACCENT, PRIMARY } from "../../constants/globals"
+import Container from "../Container"
 
 export default () => {
-    return <Box sx={{ textAlign: "center", py: { xs: 6, md: 8 }, px: 2 }}>
+    return <Container textAlign={"center"} py={{xs: 6 ,md: 8}} px={2}>
             <Cross color={PRIMARY} />
 
           <Typography responsive variant="h1" fontWeight={900} color={ACCENT}>
@@ -25,5 +25,5 @@ export default () => {
           <Typography responsive fontSize={14} color="#475569" mt={1}>
             Visit us on ECR · Open daily
           </Typography>
-        </Box>
+        </Container>
 }
