@@ -1,28 +1,34 @@
 /*
 Prerender script (CommonJS)
-- Start a simple static server serving `dist/`
-- Use Puppeteer to visit routes and save rendered HTML into `dist/<route>/index.html`
+- Starts a static SPA server serving `dist/`
+- Uses Puppeteer to visit routes and save rendered HTML into `dist/<route>/index.html`
 
-Usage: run after `vite build`.
+Run AFTER `vite build`
 */
 
-const http = require('http');
-const handler = require('serve-handler');
-const fs = require('fs');
-const path = require('path');
-const puppeteer = require('puppeteer');
+const http = require("http");
+const handler = require("serve-handler");
+const fs = require("fs");
+const path = require("path");
+const puppeteer = require("puppeteer");
 
-const DIST_DIR = path.resolve(__dirname, '../dist');
+const DIST_DIR = path.resolve(__dirname, "../dist");
 const PORT = 4173;
 
-// We prerender only top-level routes to keep builds fast and simple.
-const routes = ['/', '/collections'];
+// Trailing slash is important for static hosting
+const routes = ["/", "/collections/"];
 
 async function startServer() {
   return new Promise((resolve, reject) => {
     const server = http.createServer((req, res) => {
-      return handler(req, res, { public: DIST_DIR });
+      return handler(req, res, {
+        public: DIST_DIR,
+
+        // 🔑 SPA fallback — VERY IMPORTANT
+        rewrites: [{ source: "**", destination: "/index.html" }],
+      });
     });
+
     server.listen(PORT, (err) => {
       if (err) return reject(err);
       resolve(server);
@@ -32,62 +38,92 @@ async function startServer() {
 
 async function prerender() {
   if (!fs.existsSync(DIST_DIR)) {
-    console.error('dist folder not found. Run `vite build` first.');
+    console.error("❌ dist folder not found. Run `vite build` first.");
     process.exit(1);
   }
 
-  console.log('Prerendering top-level routes:', routes);
+  console.log("🧱 Prerendering routes:", routes);
 
   const server = await startServer();
-  console.log(`Static server started at http://localhost:${PORT}`);
+  console.log(`🚀 Static server running at http://localhost:${PORT}`);
 
-  const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
+  const browser = await puppeteer.launch({
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+  });
+
   const page = await browser.newPage();
 
   for (const route of routes) {
     try {
       const url = `http://localhost:${PORT}${route}`;
-      console.log('Rendering', url);
-      await page.goto(url, { waitUntil: 'networkidle0', timeout: 60000 });
+      console.log("➡️ Rendering", url);
+
+      await page.goto(url, {
+        waitUntil: "domcontentloaded",
+        timeout: 60000,
+      });
+
+      // Wait for React to hydrate
+      await page.waitForSelector("#root", { timeout: 10000 });
 
       const html = await page.content();
 
-      // Determine output path
-      const outPath = route === '/' ? path.join(DIST_DIR, 'index.html') : path.join(DIST_DIR, route.replace(/^\//, ''), 'index.html');
-      const outDir = path.dirname(outPath);
-      fs.mkdirSync(outDir, { recursive: true });
-      fs.writeFileSync(outPath, html, 'utf8');
-      console.log('Wrote', outPath);
+      const outPath =
+        route === "/"
+          ? path.join(DIST_DIR, "index.html")
+          : path.join(DIST_DIR, route.replace(/^\/|\/$/g, ""), "index.html");
+
+      fs.mkdirSync(path.dirname(outPath), { recursive: true });
+      fs.writeFileSync(outPath, html, "utf8");
+
+      console.log("✅ Wrote", outPath);
     } catch (err) {
-      console.error('Failed to prerender', route, err);
+      console.error("❌ Failed to prerender", route, err);
     }
   }
 
-  // Generate sitemap.xml in the dist folder from the prerendered routes
+  // 🔍 Generate sitemap.xml
   try {
-    const baseUrl = process.env.SITE_URL || process.env.BASE_URL || 'https://ijsstationery.vercel.app';
-    const lastmod = new Date().toISOString().split('T')[0];
-    const uniqRoutes = Array.from(new Set(routes));
-    const urlEntries = uniqRoutes.map((r) => {
-      const loc = r === '/' ? `${baseUrl}/` : `${baseUrl}${r}`;
-      return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>`;
-    }).join('\n');
+    const baseUrl =
+      process.env.SITE_URL ||
+      (process.env.VERCEL_URL
+        ? `https://${process.env.VERCEL_URL}`
+        : "http://localhost:5173");
 
-    const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urlEntries}\n</urlset>`;
+    const lastmod = new Date().toISOString().split("T")[0];
 
-    const sitemapPath = path.join(DIST_DIR, 'sitemap.xml');
-    fs.writeFileSync(sitemapPath, sitemap, 'utf8');
-    console.log('Wrote sitemap to', sitemapPath);
+    const urlEntries = routes
+      .map((r) => {
+        const loc = r === "/" ? `${baseUrl}/` : `${baseUrl}${r}`;
+        return `  <url>
+    <loc>${loc}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>`;
+      })
+      .join("\n");
+
+    const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urlEntries}
+</urlset>`;
+
+    const sitemapPath = path.join(DIST_DIR, "sitemap.xml");
+    fs.writeFileSync(sitemapPath, sitemap, "utf8");
+
+    console.log("🗺️ Sitemap written to", sitemapPath);
   } catch (e) {
-    console.warn('Failed to generate sitemap.xml:', e && e.message ? e.message : e);
+    console.warn("⚠️ Sitemap generation failed:", e?.message || e);
   }
 
   await browser.close();
   server.close();
-  console.log('Prerender complete.');
+
+  console.log("🎉 Prerender complete.");
 }
 
-prerender().catch((e) => {
-  console.error(e);
+prerender().catch((err) => {
+  console.error(err);
   process.exit(1);
 });
