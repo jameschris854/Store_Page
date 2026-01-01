@@ -1,4 +1,4 @@
-import { Grid, Box, Button, List } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import type { Collection } from "../../types/type";
 import Typography from "../Typography";
 import { useEffect, useState } from "react";
