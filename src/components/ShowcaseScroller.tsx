@@ -32,7 +32,7 @@ export default function ShowcaseScroller({
       loop: true,
       align: "center",
       skipSnaps: false,
-      duration: 35,
+      duration: 35
     },
     [
       AutoScroll({

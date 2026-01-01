@@ -1,4 +1,4 @@
-import { Grid, Box, Button } from "@mui/material";
+import { Grid, Box, Button, List } from "@mui/material";
 import type { Collection } from "../../types/type";
 import Typography from "../Typography";
 import { useEffect, useState } from "react";
@@ -45,11 +45,13 @@ export default function CollectionsGrid({
       </Box>
 
       {/* ---------- GRID ---------- */}
-      <Grid container spacing={3}>
+      <Box overflow={"clip"} flexDirection={"row"} gap={3} display={"flex"}>
         {collections.map((c) => (
-          <CollectionCard key={c.path} collection={c} />
+          <Box width={150} height={150} display={"flex"}>
+            <CollectionCard key={c.path} collection={c} />
+          </Box>
         ))}
-      </Grid>
+      </Box>
       <Box sx={{ textAlign: "center", mt: 5 }}>
         <Button
           aria-label="See More Collections"

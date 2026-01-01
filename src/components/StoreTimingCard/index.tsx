@@ -7,7 +7,7 @@ import {
   Chip,
   Divider,
 } from "@mui/material";
-import Typography from "./Typography";
+import Typography from "../Typography";
 
 dayjs.extend(isBetween);
 dayjs.extend(customParseFormat);
