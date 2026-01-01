@@ -100,6 +100,7 @@ export default function ShowcaseScroller({
       {/* Arrows */}
       <IconButton
         onClick={() => emblaApi?.scrollPrev()}
+        aria-label="scroll to prev image"
         sx={{
           position: "absolute",
           top: "50%",
@@ -114,6 +115,7 @@ export default function ShowcaseScroller({
 
       <IconButton
         onClick={() => emblaApi?.scrollNext()}
+        aria-label="scroll to next image"
         sx={{
           position: "absolute",
           top: "50%",

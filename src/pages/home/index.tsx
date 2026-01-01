@@ -1,11 +1,8 @@
 import {
   Box,
   Grid,
-  Button,
   Typography,
 } from "@mui/material";
-import PhoneIcon from "@mui/icons-material/Phone";
-import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import CollectionsGrid from "../../components/CollectionsGrid";
 import Footer from "../../components/Footer";
 import Hero from "../../components/Hero";
@@ -16,24 +13,28 @@ import StoreTimingCard from "../../components/StoreTimingCard";
 import { PRIMARY } from "../../constants/globals";
 import usePlaceData from "../../hooks/usePlaceData";
 import Container from "../../components/Container";
-
-
-const STORE = {
-  phone: "9941715234",
-  whatsapp: "919941715234",
-  email: "ijsstationeryecr@gmail.com",
-};
+import Seo from "../../components/Seo";
 
 /* ---------------- component ---------------- */
 export default function Home() {
  const {loading,placeData} = usePlaceData()
+ 
+  const siteName = "IJS Stationery";
+  const pageTitle = placeData?.result?.name
+    ? `${placeData.result.name} — ${siteName}`
+    : `${siteName} — Stationery Store on ECR`;
 
+  const pageDescription = placeData?.result?.formatted_address
+    ? `Visit ${placeData.result.name} at ${placeData.result.formatted_address}. Premium stationery, school and office supplies on ECR.`
+    : "Visit IJS Stationery on ECR for premium stationery, toys, gifts and office supplies.";
   return (
-    <Box
-      sx={{
+    <main
+      style={{
         background: "linear-gradient(#fbfdff,#f7f9ff)",
       }}
     >
+      <Seo title={pageTitle} description={pageDescription} />
+
       {/* ---------------- HERO ---------------- */}
       <Section>
         <Hero />
@@ -92,30 +93,6 @@ export default function Home() {
                 <StoreTimingCard
                   periods={placeData.result.current_opening_hours.periods}
                 />
-
-                {/* Contact row */}
-                <Box
-                  sx={{
-                    mt: 2,
-                    display: "flex",
-                    gap: 2,
-                    alignItems: "center",
-                    flexWrap: "wrap",
-                  }}
-                >
-                  <PhoneIcon sx={{ color: PRIMARY }} />
-                  <Typography sx={{ fontWeight: 800 }}>{STORE.phone}</Typography>
-
-                  <Button
-                    size="small"
-                    startIcon={<WhatsAppIcon />}
-                    href={`https://wa.me/${STORE.whatsapp}`}
-                    target="_blank"
-                    sx={{ fontWeight: 800 }}
-                  >
-                    WhatsApp
-                  </Button>
-                </Box>
               </Grid>
 
               {/* -------- RIGHT : MAP -------- */}
@@ -130,6 +107,7 @@ export default function Home() {
                   }}
                 >
                   <iframe
+                    title="IJS Stationery Location"
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}
@@ -153,6 +131,6 @@ export default function Home() {
         </Container>
       </Section>
       {placeData?.result && <Footer data={placeData?.result} />}
-    </Box>
+    </main>
   );
 }

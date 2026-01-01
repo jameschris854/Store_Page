@@ -1,0 +1,6 @@
+# Allow all crawlers to access the entire site
+User-agent: *
+Allow: /
+
+# Specify the sitemap location (if you have one in the future)
+# Sitemap: https://ijsstationery.com/sitemap.xml

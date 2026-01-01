@@ -12,59 +12,38 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import type { Result } from "../../types/googlePlaceDetailsRes";
 import Typography from "../Typography";
-import { ACCENT } from "../../constants/globals";
+import { PRIMARY } from "../../constants/globals";
 import Container from "../Container";
 
 dayjs.extend(isBetween);
 dayjs.extend(customParseFormat);
 
-type Period = {
-  open: { day: number; time: string };
-  close: { day: number; time: string };
-};
-
 type Props = {
   data: Result
 };
 
-const parse = (t: string) => dayjs(t, "HHmm");
-
-function isOpenNow(periods: Period[]) {
-  const now = dayjs();
-  const today = now.day();
-
-  return periods.some((p) => {
-    if (p.open.day !== today) return false;
-    const start = parse(p.open.time);
-    const end = parse(p.close.time);
-    return now.isBetween(start, end, null, "[)");
-  });
-}
-
 export default function Footer({data}: Props) {
 
- let periods = data?.current_opening_hours?.periods || [];
  const name = data?.name || "Store Name";
  const rating = data?.rating || 0;
  const address = data?.formatted_address || "Store Address";
  const phone = data?.formatted_phone_number || "0000000000";
  const url = data?.url || "#";
 
-  const openNow = isOpenNow(periods);
-
   return (
     <Container
       sx={{
         mt: 10,
         py: 4,
-        background: "#1e293b",
-        color: "#e5e7eb",
+        background: "#ffffffff",
+        color: "#1a1a1aff",
         marginTop: "auto",
+        boxShadow: "0 -5px 20px rgba(2,6,23,0.1)",
       }}
     >
         {/* ---------- TOP ---------- */}
         <Stack spacing={1}>
-          <Typography fontSize={20} fontWeight={900}>
+          <Typography letterSpacing={1.2} fontSize={20} fontWeight={900} color={PRIMARY}>
             {name}
           </Typography>
 
@@ -75,14 +54,14 @@ export default function Footer({data}: Props) {
               readOnly
               size="small"
             />
-            <Typography fontSize={14} color="#cbd5f5">
+            <Typography fontSize={14}>
               {rating} on Google
             </Typography>
           </Stack>
 
           <Stack direction="row" spacing={1} alignItems="center">
             <LocationOnIcon fontSize="small" />
-            <Typography fontSize={14} color="#cbd5f5">
+            <Typography fontSize={14} >
               {address}
             </Typography>
           </Stack>
@@ -93,46 +72,40 @@ export default function Footer({data}: Props) {
             mt={1}
           >
             <Button
+              aria-label="call now"
               startIcon={<PhoneIcon />}
               href={`tel:${phone}`}
-              sx={{ color: "#fff", justifyContent: "flex-start" }}
+              sx={{ color: "#b91c1c", justifyContent: "flex-start" }}
             >
               {phone}
             </Button>
 
             <Button
+              aria-label="chat on whatsapp"
               startIcon={<WhatsAppIcon />}
               href={`https://wa.me/91${phone}`}
               target="_blank"
-              sx={{ color: "#22c55e", justifyContent: "flex-start" }}
+              sx={{ color: "#b91c1c", justifyContent: "flex-start" }}
             >
               WhatsApp
             </Button>
 
             <Button
+              aria-label="get directions in google maps"
               startIcon={<LocationOnIcon />}
               href={url}
               target="_blank"
-              sx={{ color: ACCENT, justifyContent: "flex-start" }}
+              sx={{ color: "#b91c1c", justifyContent: "flex-start" }}
             >
               Directions
             </Button>
           </Stack>
-
-          <Typography
-            fontSize={14}
-            fontWeight={700}
-            color={openNow ? "#22c55e" : "#f87171"}
-            mt={1}
-          >
-            {openNow ? "Open now" : "Closed now"}
-          </Typography>
         </Stack>
 
-        <Divider sx={{ my: 3, borderColor: "#334155" }} />
+        <Divider sx={{ my: 3, borderColor: "#a8b8cfff" }} />
 
         {/* ---------- BOTTOM ---------- */}
-        <Typography fontSize={13} color="#94a3b8">
+        <Typography fontSize={13} color="#222a35ff">
           © {new Date().getFullYear()} {name}. All rights reserved.
         </Typography>
     </Container>

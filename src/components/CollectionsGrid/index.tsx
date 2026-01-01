@@ -52,6 +52,7 @@ export default function CollectionsGrid({
       </Grid>
       <Box sx={{ textAlign: "center", mt: 5 }}>
         <Button
+          aria-label="See More Collections"
           onClick={() => navigation("collections",{})}
           sx={{
             px: 6,

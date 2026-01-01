@@ -18,21 +18,25 @@ const VARIANT_SIZES: Record<string, number> = {
 };
 
 export default function ResponsiveTypography({
-  variant = "body1",
+  variant = "inherit",
   sx,
   children,
+  fontSize,
   responsive,
   ...props
 }: TypographyProps & {responsive?: boolean}) {
-  const baseSize = VARIANT_SIZES[variant] ?? 16;
-  let sxModified = responsive ? {
+  const baseSize =  (sx as any)?.fontSize  ? (sx as any)?.fontSize : fontSize ? fontSize : variant ? VARIANT_SIZES[variant] : "inherit";
+  console.log(baseSize)
+  let sxModified = responsive && typeof baseSize === "number" ? {
         fontSize: {
           xs: Math.round(baseSize * 0.55),
           sm: Math.round(baseSize * 0.7),
           md: baseSize,
         },
         ...sx, // user styles last → override if needed
-      } : sx;
+      } : {fontSize,...sx};
+    console.log(sxModified)
+
   return (
     <Typography
       {...props}

@@ -10,15 +10,15 @@ export default () => {
           <Typography responsive variant="h1" fontWeight={900} color={ACCENT}>
             IJS
           </Typography>
-          <Typography responsive variant="h1" fontWeight={900}  color={PRIMARY}>
+          <Typography responsive variant="h1" fontWeight={900} color={PRIMARY}>
             STATIONERY
           </Typography>
 
-          <Typography responsive variant="h6" fontWeight={900} color={PRIMARY}>
+          <Typography responsive fontSize={20} variant="h2" fontWeight={900} color={PRIMARY}>
             SCHOOL · TOYS · GIFTS · OFFICE · ART · SPORTS
           </Typography>
 
-          <Typography responsive variant="subtitle1">
+          <Typography responsive fontSize={16} mt={2} >
             Your one-stop shop for all stationery needs.
           </Typography>
 

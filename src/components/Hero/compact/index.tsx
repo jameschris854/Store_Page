@@ -24,9 +24,9 @@ export default function HeroCompact({
         </IconButton>
       )}
       <Box>
-      <Box flexDirection={"row"} display={"flex"}>
-        <Typography fontWeight={900} fontSize={32} color={ACCENT}>IJS</Typography>
-        <Typography paddingLeft={1} fontWeight={900} fontSize={32} color={PRIMARY}>STATIONERY</Typography>
+      <Box flexDirection={"row"} display={"flex"} py={2}>
+        <Typography responsive fontWeight={900} fontSize={32} color={ACCENT}>IJS</Typography>
+        <Typography responsive paddingLeft={1} fontWeight={900} fontSize={32} color={PRIMARY}>STATIONERY</Typography>
       </Box>
         {title && (
           <Typography fontSize={32} color="#475569">

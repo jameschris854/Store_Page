@@ -1,6 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
 import { Box, Grid, Skeleton, Button, Breadcrumbs } from "@mui/material";
-import { Helmet } from "react-helmet-async";
 import { useParams, useNavigate } from "react-router";
 import { getCollectionsTree } from "../../services/collectionservice";
 import type { Collection } from "../../types/type";
@@ -12,6 +11,7 @@ import usePlaceData from "../../hooks/usePlaceData";
 import Header from "../../Header";
 import Container from "../../components/Container";
 import Section from "../../components/Section";
+import Seo from "../../components/Seo";
 
 export default function CollectionsPage() {
   const { "*": path } = useParams();
@@ -62,6 +62,7 @@ export default function CollectionsPage() {
 
   return (
     <Box
+      component="main"
       sx={{
         background: "linear-gradient(#fbfdff,#f7f9ff)",
         display: "flex",
@@ -71,10 +72,7 @@ export default function CollectionsPage() {
       {/* Hero Section (like homepage) */}
       <Header />
       <Container my={4}>
-          <Helmet>
-            <title>{pageTitle}</title>
-            <meta name="description" content={pageDescription} />
-          </Helmet>
+          <Seo title={pageTitle} description={pageDescription} canonical={`https://ijsstationery.com/collections${path ? `/${path}` : ""}`} />
 
           {/* Breadcrumbs */}
           <Section>
@@ -191,6 +189,7 @@ export default function CollectionsPage() {
                   We don’t have products in this category yet. Stay tuned!
                 </Typography>
                 <Button
+                  aria-label="Back to All Collections"
                   variant="contained"
                   color="primary"
                   onClick={() => navigate("/collections")}

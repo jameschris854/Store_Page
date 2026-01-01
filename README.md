@@ -19,55 +19,63 @@ If you are developing a production application, we recommend updating the config
 export default defineConfig([
   globalIgnores(['dist']),
   {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+    # IJS Stationery — SSG & SEO Guide
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+    This project uses a client-side React app combined with a prerender (SSG) step to produce SEO-friendly HTML for crawlers and social previews.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+    What this repo provides
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+    - `src/components/Seo.tsx` — reusable per-route SEO component that uses `react-helmet-async`.
+    - `scripts/prerender.js` — a Puppeteer-based script that:
+      - Prerenders `/`, `/collections`, and all collection detail routes discovered from the Google Sheet data.
+      - Generates `dist/sitemap.xml` based on the prerendered routes.
+    - `package.json` includes the script `build:ssg` which runs the Vite build and then prerenders pages.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+    Quick start
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+    1. Install dependencies:
+
+    ```bash
+    npm install
+    ```
+
+    2. Provide environment variables (create a `.env` at project root or set in CI):
+
+    ```
+    VITE_SHEET_ID=your_google_sheet_id_here
+    SITE_URL=https://ijsstationery.com
+    ```
+
+    3. Build and prerender:
+
+    ```bash
+    npm run build:ssg
+    ```
+
+    4. Preview the generated `dist/` (or deploy the generated static output):
+
+    ```bash
+    npx serve dist
+    ```
+
+    Notes about the dynamic sitemap
+
+    - The project no longer keeps a static `public/sitemap.xml` in the repo. The prerender script generates `dist/sitemap.xml` during the build using the latest collection data from your Google Sheet.
+    - If you want to submit the sitemap to Google automatically after deployment, you can ping:
+
+    ```
+    https://www.google.com/ping?sitemap=${SITE_URL}/sitemap.xml
+    ```
+
+    Deployment notes (Vercel)
+
+    - Vercel handles CDN invalidation automatically on deploy. Deploying each new build will make the updated prerendered HTML and sitemap available to crawlers.
+    - Make sure `VITE_SHEET_ID` and `SITE_URL` are set in the Vercel project environment variables.
+
+    Further improvements you may request
+
+    - Add incremental regeneration (ISR) or SSR for real-time content updates.
+    - Add a CI job that runs `npm run build:ssg` and deploys to Vercel when your sheet changes (via webhook).
+    - Add a post-deploy script to ping search engines.
+
+    If you'd like, I can add an optional `scripts/ping-search-engines.js` and a CI snippet to run it after deployments.
