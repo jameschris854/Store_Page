@@ -5,8 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && node scripts/prerender.cjs",
-    "build:ssg": "tsc -b && vite build && node scripts/prerender.cjs",
+    "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -35,16 +34,17 @@
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
+    "child_process": "^1.0.2",
+    "dotenv": "^16.1.4",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
+    "puppeteer": "^21.11.0",
+    "serve-handler": "^6.1.6",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.46.4",
-    "vite": "^7.2.4",
-    "puppeteer": "^21.0.0",
-    "dotenv": "^16.1.4",
-    "serve-handler": "^6.1.4"
+    "vite": "^7.2.4"
   },
   "overrides": {
     "react-is": "^18.3.1"
