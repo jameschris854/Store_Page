@@ -1,9 +1,10 @@
 {
   "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/collections", "destination": "/collections/index.html" },
+    { "source": "/collections/(.*)", "destination": "/collections/index.html" },
+    { "source": "/about", "destination": "/index.html" },
+    { "source": "/contact", "destination": "/index.html" }
   ],
   "builds": [],
   "outputDirectory": "dist"
