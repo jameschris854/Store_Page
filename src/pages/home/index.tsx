@@ -12,17 +12,12 @@ import FindUs from "../../components/FindUs";
 export default function Home() {
  const {loading,placeData} = usePlaceData()
  
-  const siteName = "IJS Stationery";
-  const pageTitle = placeData?.result?.name
-    ? `${placeData.result.name} — ${siteName}`
-    : `${siteName} — Stationery Store on ECR`;
-
   const pageDescription = placeData?.result?.formatted_address
     ? `Visit ${placeData.result.name} at ${placeData.result.formatted_address}. Premium stationery, school and office supplies on ECR.`
     : "Visit IJS Stationery on ECR for premium stationery, toys, gifts and office supplies.";
   return (
     <main>
-      <Seo title={pageTitle} description={pageDescription} />
+      <Seo description={pageDescription} />
 
       {/* ---------------- HERO ---------------- */}
       <Section>
