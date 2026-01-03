@@ -12,6 +12,7 @@ import Header from "../../Header";
 import Container from "../../components/Container";
 import Section from "../../components/Section";
 import Seo from "../../components/Seo";
+import Reveal from "../../components/Reveal";
 
 export default function CollectionsPage() {
   const { "*": path } = useParams();
@@ -67,6 +68,7 @@ export default function CollectionsPage() {
         background: "linear-gradient(#fbfdff,#f7f9ff)",
         display: "flex",
         flexDirection: "column",
+        height: "100%"
       }}
     >
       {/* Hero Section (like homepage) */}
@@ -75,7 +77,7 @@ export default function CollectionsPage() {
           <Seo title={pageTitle} description={pageDescription} canonical={`https://ijsstationery.com/collections${path ? `/${path}` : ""}`} />
 
           {/* Breadcrumbs */}
-          <Section>
+          <Reveal>
             <Box sx={{ mb: 3, overflowX: "auto" }}>
               <Breadcrumbs
                 aria-label="breadcrumb"
@@ -161,16 +163,16 @@ export default function CollectionsPage() {
                   })}
               </Breadcrumbs>
             </Box>
-          </Section>
-          <Section>
+          </Reveal>
+           <Reveal>
             {/* Main Title for top-level */}
             {!current && !path && (
-              <Typography component="h1" fontSize={32} fontWeight={900} mb={3}>
+              <Typography component="h1" fontSize={32} fontWeight={600} mb={3}>
                 All Collections
               </Typography>
             )}
-          </Section>        
-          <Section>
+          </Reveal>        
+          <Reveal>
             {/* Empty / Leaf Category */}
             {!loading && path && current && children.length === 0 && (
               <Box sx={{ textAlign: "center", py: 10, px: 2 }}>
@@ -199,8 +201,8 @@ export default function CollectionsPage() {
                 </Button>
               </Box>
             )}
-          </Section>
-          <Section>
+          </Reveal>
+          <Reveal>
             {/* Grid / Collections */}
             {!loading && children.length > 0 && (
               <Grid container spacing={3}>
@@ -209,8 +211,8 @@ export default function CollectionsPage() {
                 ))}
               </Grid>
             )}
-          </Section>
-          <Section>
+          </Reveal>
+          <Reveal>
             {/* Skeleton Loader */}
             {loading && (
               <Grid container spacing={3}>
@@ -225,7 +227,7 @@ export default function CollectionsPage() {
                 ))}
               </Grid>
             )}
-          </Section>
+          </Reveal>
       </Container>
 
       {/* Footer */}

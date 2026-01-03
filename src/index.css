@@ -1,3 +1,52 @@
-body {
-  margin: 0px;
+/* ---------------- global reset ---------------- */
+html,
+body,
+#root {
+  min-height: 100%;
+  margin: 0;
 }
+
+/* ---------------- base background ---------------- */
+html {
+  background-color: #ffffff; /* prevents iOS overscroll flash */
+}
+
+body {
+  font-family: "TikTok Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+
+  background: linear-gradient(
+    in oklab,
+    180deg,
+    #ffffff 0%,
+    #fff6f6 100%
+  );
+
+  background-repeat: no-repeat;
+}
+
+/* ---------------- desktop only: fixed background ---------------- */
+@media (min-width: 769px) {
+  body {
+    background-attachment: fixed;
+  }
+}
+
+/* ---------------- mobile-safe fallback (optional but robust) ---------------- */
+/* Uncomment if you want fixed-like behavior even on mobile */
+/*
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+
+  background: linear-gradient(
+    in oklab,
+    180deg,
+    #ffffff 0%,
+    #fff6f6 100%
+  );
+}
+*/

@@ -91,7 +91,7 @@ export default function CollectionCard({
           <Typography
             responsive
             color="#fff"
-            fontWeight={900}
+            fontWeight={600}
             fontSize={20}
             lineHeight={1.2}
           >

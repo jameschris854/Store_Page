@@ -71,7 +71,7 @@ export default function StoreHoursMinimal({ periods }: { periods: Period[] }) {
         borderRadius: 3,
       }}
     >
-      <Typography fontWeight={900} fontSize={20}>
+      <Typography fontWeight={600} fontSize={20}>
         Store hours
       </Typography>
 

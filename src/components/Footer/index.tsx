@@ -36,13 +36,13 @@ export default function Footer({data}: Props) {
         mt: 10,
         py: 4,
         background: "#ffffffff",
-        color: "#1a1a1aff",
+        color: "#5f5f5fff",
         marginTop: "auto"
       }}
     >
         {/* ---------- TOP ---------- */}
         <Stack spacing={1}>
-          <Typography letterSpacing={1.2} fontSize={20} fontWeight={900} color={PRIMARY}>
+          <Typography letterSpacing={1.2} fontSize={25} fontWeight={600} color={PRIMARY}>
             {name}
           </Typography>
 
@@ -53,21 +53,21 @@ export default function Footer({data}: Props) {
               readOnly
               size="small"
             />
-            <Typography fontSize={14}>
+            <Typography fontSize={18}>
               {rating} on Google
             </Typography>
           </Stack>
 
           <Stack direction="row" spacing={1} alignItems="center">
             <LocationOnIcon fontSize="small" />
-            <Typography fontSize={14} >
+            <Typography fontSize={18} >
               {address}
             </Typography>
           </Stack>
 
           <Stack
             direction={{ xs: "column", sm: "row" }}
-            spacing={2}
+            spacing={1}
             mt={1}
           >
             <Button

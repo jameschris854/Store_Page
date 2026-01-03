@@ -25,8 +25,8 @@ export default function HeroCompact({
       )}
       <Box>
       <Box flexDirection={"row"} display={"flex"} py={2}>
-        <Typography responsive fontWeight={900} fontSize={32} color={ACCENT}>IJS</Typography>
-        <Typography responsive paddingLeft={1} fontWeight={900} fontSize={32} color={PRIMARY}>STATIONERY</Typography>
+        <Typography responsive fontWeight={600} fontSize={32} color={ACCENT}>IJS</Typography>
+        <Typography responsive paddingLeft={1} fontWeight={600} fontSize={32} color={PRIMARY}>STATIONERY</Typography>
       </Box>
         {title && (
           <Typography fontSize={32} color="#475569">

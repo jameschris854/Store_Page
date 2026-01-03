@@ -27,7 +27,7 @@ export default function ResponsiveTypography({
 }: TypographyProps & {responsive?: boolean}) {
   const baseSize =  (sx as any)?.fontSize  ? (sx as any)?.fontSize : fontSize ? fontSize : variant ? VARIANT_SIZES[variant] : "inherit";
   console.log(baseSize)
-  let sxModified = responsive && typeof baseSize === "number" ? {
+  let sxModified = true && typeof baseSize === "number" ? {
         fontSize: {
           xs: Math.round(baseSize * 0.55),
           sm: Math.round(baseSize * 0.7),
@@ -40,8 +40,9 @@ export default function ResponsiveTypography({
   return (
     <Typography
       {...props}
-      variant={variant}
       sx={sxModified}
+      fontFamily={"inherit"}
+      lineHeight={1.2}
     >
       {children}
     </Typography>
