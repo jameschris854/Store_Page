@@ -10,7 +10,6 @@ import Footer from "../../components/Footer";
 import usePlaceData from "../../hooks/usePlaceData";
 import Header from "../../Header";
 import Container from "../../components/Container";
-import Section from "../../components/Section";
 import Seo from "../../components/Seo";
 import Reveal from "../../components/Reveal";
 
