@@ -69,7 +69,6 @@ export default function StoreHoursMinimal({ periods }: { periods: Period[] }) {
     <Box
       sx={{
         borderRadius: 3,
-        boxShadow: "0 8px 28px rgba(2,6,23,0.06)",
       }}
     >
       <Typography fontWeight={900} fontSize={20}>

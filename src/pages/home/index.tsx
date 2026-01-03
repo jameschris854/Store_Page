@@ -74,7 +74,7 @@ export default function Home() {
       {/* ---------------- FIND US ---------------- */}
       {placeData?.result?.current_opening_hours?.periods && (
         <Section loading={loading}>
-          <Container mb={2}>
+          <Container mt={6} mb={4}>
             <Typography
             fontSize={22}
             fontWeight={900}

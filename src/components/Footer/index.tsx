@@ -24,10 +24,10 @@ type Props = {
 
 export default function Footer({data}: Props) {
 
- const name = data?.name || "Store Name";
+ const name = data?.name || "";
  const rating = data?.rating || 0;
- const address = data?.formatted_address || "Store Address";
- const phone = data?.formatted_phone_number || "0000000000";
+ const address = data?.formatted_address || "";
+ const phone = data?.formatted_phone_number || "";
  const url = data?.url || "#";
 
   return (
@@ -37,8 +37,7 @@ export default function Footer({data}: Props) {
         py: 4,
         background: "#ffffffff",
         color: "#1a1a1aff",
-        marginTop: "auto",
-        boxShadow: "0 -5px 20px rgba(2,6,23,0.1)",
+        marginTop: "auto"
       }}
     >
         {/* ---------- TOP ---------- */}
@@ -85,7 +84,7 @@ export default function Footer({data}: Props) {
               startIcon={<WhatsAppIcon />}
               href={`https://wa.me/91${phone}`}
               target="_blank"
-              sx={{ color: "#b91c1c", justifyContent: "flex-start" }}
+              sx={{ color: "#b91c1c",background:"transparent", justifyContent: "flex-start" }}
             >
               WhatsApp
             </Button>
