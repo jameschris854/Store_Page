@@ -6,6 +6,15 @@ body,
   margin: 0;
 }
 
+body {
+  visibility: hidden;
+}
+
+body.react-ready {
+  visibility: visible;
+}
+
+
 /* ---------------- base background ---------------- */
 html {
   background-color: #ffffff; /* prevents iOS overscroll flash */

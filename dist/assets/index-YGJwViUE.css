@@ -1,0 +1,1 @@
+html,body,#root{min-height:100%;margin:0}body{visibility:hidden}body.react-ready{visibility:visible}html{background-color:#fff}body{font-family:TikTok Sans,sans-serif;font-optical-sizing:auto;font-style:normal;background:linear-gradient(in oklab,180deg,#ffffff 0%,#fff6f6 100%);background-repeat:no-repeat}@media(min-width:769px){body{background-attachment:fixed}}
