@@ -11,6 +11,7 @@ interface ShowcaseScrollerProps {
   slidePadding?: number;
   autoScrollSpeed?: number;
   vignette?: boolean;
+  role?: string
 }
 
 export default function ShowcaseScroller({
@@ -18,7 +19,8 @@ export default function ShowcaseScroller({
   height = { xs: 220, md: 320 },
   slidePadding = 0,
   autoScrollSpeed = 0.6,
-  vignette
+  vignette,
+  role
 }: ShowcaseScrollerProps) {
   const slides = useMemo(
     () => (Array.isArray(children) ? children : [children]),
@@ -52,7 +54,7 @@ export default function ShowcaseScroller({
   const play = () => autoScrollRef.current?.play();
 
   return (
-    <Box sx={{ position: "relative", width: "100%" }}>
+    <Box role={role || "banner"} sx={{ position: "relative", width: "100%" }}>
       <Box
         sx={{ position: "relative", overflow: "hidden" }}
         onMouseEnter={pause}
