@@ -73,7 +73,7 @@ export default function CollectionsPage() {
       {/* Hero Section (like homepage) */}
       <Header />
       <Container my={4}>
-          <Seo title={pageTitle} description={pageDescription} canonical={`https://ijsstationery.com/collections${path ? `/${path}` : ""}`} />
+          <Seo title={pageTitle} description={pageDescription} canonical={`https://ijsstationery.in/collections${path ? `/${path}` : ""}`} />
 
           {/* Breadcrumbs */}
           <Reveal>

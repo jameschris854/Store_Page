@@ -13,7 +13,7 @@ const SITE_NAME = "IJS Stationery";
 const DEFAULT_TITLE = `${SITE_NAME} - Stationery Store on ECR`;
 const DEFAULT_DESCRIPTION =
   "IJS Stationery - Premium stationery, school supplies, toys, gifts, office essentials, and art materials in Chennai.";
-const DEFAULT_CANONICAL = "https://www.ijsstationery.in";
+const DEFAULT_CANONICAL = "https://ijsstationery.in";
 
 export default function Seo({
   title,
