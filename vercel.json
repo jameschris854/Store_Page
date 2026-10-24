@@ -3,6 +3,8 @@
     { "source": "/", "destination": "/index.html" },
     { "source": "/collections", "destination": "/collections/index.html" },
     { "source": "/collections/(.*)", "destination": "/collections/index.html" },
+    { "source": "/offers/(.*)", "destination": "/index.html" },
+    { "source": "/admin/offers", "destination": "/index.html" },
     { "source": "/about", "destination": "/index.html" },
     { "source": "/contact", "destination": "/index.html" }
   ],
