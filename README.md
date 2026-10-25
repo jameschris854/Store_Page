@@ -42,7 +42,6 @@ export default defineConfig([
     2. Provide environment variables (create a `.env` at project root or set in CI):
 
     ```
-    VITE_SHEET_ID=your_google_sheet_id_here
     SITE_URL=https://ijsstationery.com
     ```
 
@@ -70,7 +69,7 @@ export default defineConfig([
     Deployment notes (Vercel)
 
     - Vercel handles CDN invalidation automatically on deploy. Deploying each new build will make the updated prerendered HTML and sitemap available to crawlers.
-    - Make sure `VITE_SHEET_ID` and `SITE_URL` are set in the Vercel project environment variables.
+    - Make sure only `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` are configured for the frontend. Put `GOOGLE_SHEET_ID` in Supabase Edge Function secrets; `SITE_URL` is only needed when running the optional SEO script.
 
     Further improvements you may request
 

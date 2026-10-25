@@ -9,7 +9,7 @@ export function getSupabaseClient(): SupabaseClient<Database> {
   const url = import.meta.env.VITE_SUPABASE_URL;
   const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-  if (!url || !anonKey) {
+  if (!url || !anonKey) {1
     throw new Error(
       "configurations missing",
     );
