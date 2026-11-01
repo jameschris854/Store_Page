@@ -7,6 +7,7 @@ import usePlaceData from "../../hooks/usePlaceData";
 import Seo from "../../components/Seo";
 import StorePhotos from "../../components/StorePhotos";
 import FindUs from "../../components/FindUs";
+import OffersCarousel from "../../components/OffersCarousel";
 
 /* ---------------- component ---------------- */
 export default function Home() {
@@ -22,6 +23,10 @@ export default function Home() {
       {/* ---------------- HERO ---------------- */}
       <Section>
         <Hero />
+      </Section>
+      {/* ---------------- OFFERS ---------------- */}
+      <Section>
+        <OffersCarousel />
       </Section>
       {/* ---------------- COLLECTIONS ---------------- */}
       <CollectionsGrid />

@@ -1,0 +1,13 @@
+project_id = "yhmubmmfnpcvrubtmqbd"
+
+[functions.place-details]
+verify_jwt = false
+
+[functions.collections]
+verify_jwt = true
+
+[functions.offer-admin]
+verify_jwt = false
+
+[functions.whatsapp]
+verify_jwt = false

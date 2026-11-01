@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router";
 import Home from "./pages/home";
 import CollectionsPage from "./pages/Collections";
+import OfferDetailsPage from "./pages/OfferDetails";
 import { useLayoutEffect } from "react";
 
 
@@ -21,6 +22,7 @@ export default function App() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/collections/*" element={<CollectionsPage />} />
+      <Route path="/offers/:id" element={<OfferDetailsPage />} />
     </Routes>
   );
 }

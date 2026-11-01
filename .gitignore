@@ -14,6 +14,7 @@ dist-ssr
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
+!.vscode/settings.json
 .idea
 .DS_Store
 *.suo
@@ -25,3 +26,7 @@ dist-ssr
 .vercel
 .env*.local
 package-lock.json
+supabase/.temp/
+supabase/functions/.env
+supabase/functions/.env.local
+supabase/functions/.env.production
