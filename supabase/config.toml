@@ -4,7 +4,7 @@ project_id = "yhmubmmfnpcvrubtmqbd"
 verify_jwt = false
 
 [functions.collections]
-verify_jwt = true
+verify_jwt = false
 
 [functions.offer-admin]
 verify_jwt = false
