@@ -49,13 +49,17 @@ Bulk create, update, and delete operations are limited to 100 offers per tool ca
 
 ## WhatsApp webhook
 
-The `whatsapp` Edge Function is a standalone inbound adapter. It handles Meta's GET verification challenge, verifies each POST against `X-Hub-Signature-256` using the raw request body and `META_APP_SECRET`, ignores non-text/status events, and forwards allowlisted senders' text to `offer-admin`. Set `WHATSAPP_ADMIN_IDS` to a comma-separated list of WhatsApp sender IDs as Meta sends them (digits with country code, no `+`). Message IDs are recorded for 30 days to suppress duplicate webhook deliveries. The adapter does not send replies to WhatsApp yet.
+The `whatsapp` Edge Function handles both inbound and outbound WhatsApp messages. It verifies Meta's webhook signature, ignores non-text/status events, forwards allowlisted senders' messages to `offer-admin`, then sends the agent's text response to the sender using Meta's WhatsApp Messages API. Set `WHATSAPP_ADMIN_IDS` to a comma-separated list of WhatsApp sender IDs as Meta sends them (digits with country code, no `+`). Message IDs are recorded for 30 days to suppress duplicate webhook deliveries.
+
+Replies use a free-form service message rather than a template, so the recipient must have opted in and the 24-hour customer service window must be open (normally because they messaged your business first). The Meta access token must have permission to send messages for the selected WhatsApp Business phone number.
 
 Configure these hosted Edge Function secrets:
 
 - `META_APP_SECRET`: Meta app secret used to verify webhook signatures.
 - `META_VERIFY_TOKEN`: a random token you choose and enter in Meta's webhook setup.
 - `WHATSAPP_ADMIN_IDS`: comma-separated administrator sender IDs.
+- `WHATSAPP_ACCESS_TOKEN`: Meta access token authorized to send WhatsApp messages from your business phone number.
+- The reply uses the WhatsApp Business phone number ID from the inbound webhook's `metadata.phone_number_id`.
 - `SB_SECRET_KEYS`: JSON object mapping `whatsapp_forward` to that secret API key, used by `offer-admin` for authentication.
 - `GROQ_API_KEY` and `GROQ_MODEL`: required by `offer-admin`.
 

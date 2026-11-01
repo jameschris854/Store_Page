@@ -1,5 +1,5 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
-import { createClient } from "jsr:@supabase/supabase-js";
+import { createClient } from "@supabase/supabase-js";
 import { forwardToOfferAdmin } from "./forward.ts";
 import {
   parseAdminIds,
@@ -7,6 +7,7 @@ import {
   verifyWebhookToken,
 } from "./meta.ts";
 import { parseWhatsAppTextMessages } from "./messages.ts";
+import { sendWhatsAppReply } from "./reply.ts";
 
 const maxWebhookBodyBytes = 1_000_000;
 
@@ -95,7 +96,6 @@ Deno.serve(async (request: Request) => {
   let payload: unknown;
   try {
     payload = JSON.parse(new TextDecoder().decode(body));
-    console.log("payload : ", JSON.stringify(payload))
   } catch {
     return textResponse("Invalid JSON payload.", 400);
   }
@@ -103,7 +103,6 @@ Deno.serve(async (request: Request) => {
   let adminIds: Set<string>;
   try {
     adminIds = parseAdminIds(requiredEnv("WHATSAPP_ADMIN_IDS"));
-    console.log("admin Ids", JSON.stringify(adminIds))
     if (adminIds.size === 0) {
       throw new Error("WHATSAPP_ADMIN_IDS must contain at least one sender ID");
     }
@@ -115,7 +114,9 @@ Deno.serve(async (request: Request) => {
     return textResponse("Webhook is not configured.", 500);
   }
 
-  const messages = parseWhatsAppTextMessages(payload)
+  const messages = parseWhatsAppTextMessages(payload).filter((message) =>
+    adminIds.has(message.from)
+  );
   if (messages.length === 0) return textResponse("EVENT_RECEIVED");
 
   try {
@@ -128,8 +129,9 @@ Deno.serve(async (request: Request) => {
       if (claimError) throw claimError;
       if (claimed !== true) continue;
 
+      let reply: string;
       try {
-        await forwardToOfferAdmin(message.text, message.from);
+        reply = await forwardToOfferAdmin(message.text, message.from);
       } catch (error) {
         const { error: releaseError } = await database.rpc(
           "whatsapp_release_inbound_message",
@@ -143,13 +145,19 @@ Deno.serve(async (request: Request) => {
         }
         throw error;
       }
+
+      // Keep the claim if delivery fails so a webhook retry cannot repeat agent actions.
+      await sendWhatsAppReply(message.from, reply, {
+        accessToken: requiredEnv("WHATSAPP_ACCESS_TOKEN"),
+        phoneNumberId: message.phoneNumberId,
+      });
     }
   } catch (error) {
     console.error(
-      "WhatsApp message forwarding failed",
+      "WhatsApp message processing failed",
       error instanceof Error ? error.message : "Unknown error",
     );
-    return textResponse("Message forwarding failed.", 502);
+    return textResponse("Message processing failed.", 502);
   }
 
   return textResponse("EVENT_RECEIVED");

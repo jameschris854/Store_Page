@@ -33,7 +33,7 @@ function offerAdminApiKey(): string {
 export async function forwardToOfferAdmin(
   message: string,
   senderId: string,
-): Promise<void> {
+): Promise<string> {
   const supabaseUrl = requiredEnv("SUPABASE_URL").replace(/\/+$/, "");
   const apiKey = offerAdminApiKey();
   const response = await fetch(
@@ -52,4 +52,10 @@ export async function forwardToOfferAdmin(
   if (!response.ok) {
     throw new Error(`Offer admin returned HTTP ${response.status}`);
   }
+
+  const reply = await response.text();
+  if (!reply.trim()) {
+    throw new Error("Offer admin returned an empty reply");
+  }
+  return reply;
 }
