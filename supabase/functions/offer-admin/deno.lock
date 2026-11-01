@@ -3,6 +3,7 @@
   "specifiers": {
     "jsr:@supabase/functions-js@*": "2.118.0",
     "jsr:@supabase/server@1": "1.9.2",
+    "jsr:@supabase/server@1.9.2": "1.9.2",
     "npm:@ai-sdk/groq@3.0.79": "3.0.79_zod@4.1.8",
     "npm:@supabase/middleware@1": "1.0.0",
     "npm:@supabase/supabase-js@2.118.0": "2.118.0",

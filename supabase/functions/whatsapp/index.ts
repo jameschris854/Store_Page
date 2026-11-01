@@ -1,5 +1,5 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
-import { createClient } from "@supabase/supabase-js";
+import { createClient } from "jsr:@supabase/supabase-js";
 import { forwardToOfferAdmin } from "./forward.ts";
 import {
   parseAdminIds,
@@ -95,6 +95,7 @@ Deno.serve(async (request: Request) => {
   let payload: unknown;
   try {
     payload = JSON.parse(new TextDecoder().decode(body));
+    console.log("payload : ", JSON.stringify(payload))
   } catch {
     return textResponse("Invalid JSON payload.", 400);
   }
@@ -102,6 +103,7 @@ Deno.serve(async (request: Request) => {
   let adminIds: Set<string>;
   try {
     adminIds = parseAdminIds(requiredEnv("WHATSAPP_ADMIN_IDS"));
+    console.log("admin Ids", JSON.stringify(adminIds))
     if (adminIds.size === 0) {
       throw new Error("WHATSAPP_ADMIN_IDS must contain at least one sender ID");
     }
@@ -113,9 +115,7 @@ Deno.serve(async (request: Request) => {
     return textResponse("Webhook is not configured.", 500);
   }
 
-  const messages = parseWhatsAppTextMessages(payload).filter((message) =>
-    adminIds.has(message.from)
-  );
+  const messages = parseWhatsAppTextMessages(payload)
   if (messages.length === 0) return textResponse("EVENT_RECEIVED");
 
   try {

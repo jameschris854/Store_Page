@@ -49,7 +49,6 @@ export async function forwardToOfferAdmin(
       signal: AbortSignal.timeout(15_000),
     },
   );
-
   if (!response.ok) {
     throw new Error(`Offer admin returned HTTP ${response.status}`);
   }
