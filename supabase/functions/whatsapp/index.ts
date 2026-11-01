@@ -1,6 +1,6 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "@supabase/supabase-js";
-import { forwardToOfferAdmin } from "./forward.ts";
+import { forwardToOfferAdmin, getOfferAdminFailureMessage } from "./forward.ts";
 import {
   parseAdminIds,
   verifyMetaSignature,
@@ -133,6 +133,10 @@ Deno.serve(async (request: Request) => {
       try {
         reply = await forwardToOfferAdmin(message.text, message.from);
       } catch (error) {
+        console.error(
+          "Offer admin processing failed",
+          error instanceof Error ? error.message : "Unknown error",
+        );
         const { error: releaseError } = await database.rpc(
           "whatsapp_release_inbound_message",
           { p_message_id: message.id },
@@ -143,7 +147,24 @@ Deno.serve(async (request: Request) => {
             releaseError.message,
           );
         }
-        throw error;
+        try {
+          await sendWhatsAppReply(
+            message.from,
+            getOfferAdminFailureMessage(error),
+            {
+              accessToken: requiredEnv("WHATSAPP_ACCESS_TOKEN"),
+              phoneNumberId: message.phoneNumberId,
+            },
+          );
+        } catch (notificationError) {
+          console.error(
+            "Could not send the WhatsApp error notification",
+            notificationError instanceof Error
+              ? notificationError.message
+              : "Unknown error",
+          );
+        }
+        continue;
       }
 
       // Keep the claim if delivery fails so a webhook retry cannot repeat agent actions.

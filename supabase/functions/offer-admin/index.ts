@@ -63,13 +63,19 @@ Deno.serve(
         }
         return textResponse(response);
       } catch (error) {
+        const message = error instanceof Error
+          ? error.message
+          : "Unknown error";
+        const isRateLimit = /rate limit|tokens per minute|\bTPM\b/i.test(
+          message,
+        );
         console.error(
           "Offer admin request failed",
-          error instanceof Error ? error.message : "Unknown error",
+          message,
         );
         return textResponse(
-          "I couldn't process that message. Please try again.",
-          502,
+          isRateLimit ? "AI_RATE_LIMITED" : "AI_PROCESSING_FAILED",
+          isRateLimit ? 429 : 502,
         );
       }
     },
